@@ -1,5 +1,3 @@
-console.log('connected')
-
 /*-------------- Constants -------------*/
 
 
@@ -9,7 +7,11 @@ console.log('connected')
 
 
 /*----- Cached Element References  -----*/
-const gameBoard = document.querySelector('game-board')
+const gameBoardElement = document.querySelector('.game-board')
+const scoreBoardElement = document.querySelector('.score-board')
+
+console.log(gameBoardElement);
+console.log(scoreBoardElement);
 
 
 /*-------------- Functions -------------*/
