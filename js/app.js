@@ -9,7 +9,7 @@ console.log('connected')
 
 
 /*----- Cached Element References  -----*/
-
+const gameBoard = document.querySelector('game-board')
 
 
 /*-------------- Functions -------------*/

@@ -1,0 +1,19 @@
+.game-container {
+  display: flex;
+  justify-content: center;
+}
+
+.game-board {
+  width: 600px;
+  height: 600px;
+  border: solid 1px black;
+  display: grid;
+}
+
+.score-board {
+  padding: 5px;
+}
+
+.title{
+  text-align: center;
+}
