@@ -32,6 +32,8 @@ let board = [
 let playerPosX = 7;
 let playerPosY = 14;
 
+let invaders = [];
+
 /*----- Cached Element References  -----*/
 
 const gameBoardElement = document.querySelector('.game-board')
