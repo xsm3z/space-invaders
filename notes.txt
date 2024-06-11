@@ -1,0 +1,59 @@
+User Story
+	•	As a user, I would like to see the landing page that shows what the site is "space invaders"
+	•	As a user, I would like to see the basic rules of the game, controls, my score and maybe lore
+	•	As a user, I would like to control one ship with side to side movements to shoot down all invaders
+	•	As a user, I would like the invaders to move and avoid incoming shots and shoot back at my ship
+	•	As a user, I would like to see visual feedback when an invader/my ship has been destroyed
+	•	As a user, I would like to see as mission complete or mission failed message
+	•	As a user, I would like to be able to reset and play again
+
+Pseudocode:
+
+Constants:	
+Player
+Invaders 
+
+Variables:
+Bullets
+Score
+
+Initialize game environment:
+	Game board  - array / grid of the game 
+	Player ship
+	Invaders
+	Set initial positions for player and invaders
+
+Game Loop:
+Handle user input:
+	if player presses left arrow key
+		Move player spaceship left
+	if player presses right arrow key
+		Move player spaceship right
+	if player presses spacebar
+		Shoot player laser 
+            
+Move enemies:
+	Move each invader horizontally and downward
+        
+Check collisions:
+	Check if player's laser collides with any invader
+		If collision occurs, remove invader, update score
+	Check if any invader reaches the bottom of the screen
+		If so, end game, update display	
+	Check if any enemy collides with player spaceship
+		If collision occurs, end game, update display
+
+Check game over conditions:
+	If all enemies are destroyed
+		End game, player wins, update display
+	If any enemy reaches the bottom of the screen
+		End game, game over, update display 
+	If player's spaceship is hit by enemy projectile
+		End game, game over, update display 
+
+End of Game Loop
+
+Reset function: 
+	Clear game board 
+	Reset player and invader position 
+	Reset score
