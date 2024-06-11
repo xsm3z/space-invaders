@@ -23,18 +23,6 @@ body {
   background-color: black;
 }
 
-.score-board {
-  display: flex;
-  position: absolute;
-  font-size: 18px;
-  padding: 5px;
-  color: rgb(0, 177, 0);
-}
-
-.score-board::before {
-  content: "SCORE: ";
-}
-
 .title::after {
   content: "_";
 }
