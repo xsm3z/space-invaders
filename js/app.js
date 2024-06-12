@@ -108,18 +108,33 @@ const moveInvader = () => {
 
 setInterval(moveInvader, 250)
 
+
+
+const shootLaser = () => {
+
+}
+
 const checkCollision = () => {
   
 }
+
+const updateScore = () => {
+
+}
+
 /*----------- Event Listeners ----------*/
 
-document.addEventListener('keydown', function(event) {
-  if(event.key === 'ArrowLeft') {
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') {
     movePlayerLeft();
   } else if (event.key === 'ArrowRight') {
     movePlayerRight();
+  } else if (event.key === 'Space') {
+    shootLaser();
   }
 })
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
   render();
