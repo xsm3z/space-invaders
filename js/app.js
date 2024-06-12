@@ -74,24 +74,29 @@ board.forEach((row, rowIndex) => {
 const movePlayerLeft = () => {
   if (playerPosX > 0) {
     playerPosX--;
-    render();
   }
+  render()
 }
 
 const movePlayerRight = () => {
   if (playerPosX < board[0].length - 1) {
     playerPosX++;
-    render();
   }
+  render ()
 }
 
 const moveInvader = () => {
   invaders.forEach(invader => {
     invader.y++;
   })
+  render()
 }
 
 setInterval(moveInvader, 1000)
+
+const checkCollision = () => {
+  
+}
 /*----------- Event Listeners ----------*/
 
 document.addEventListener('keydown', function(event) {
