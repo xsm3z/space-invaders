@@ -1,11 +1,9 @@
 /*-------------- Constants -------------*/
 
 const player = {
-  speed: 1,
   color: 'white',
 }
 const invader = {
-  speed: 1,
   color: 'green',
 }
 
@@ -32,7 +30,10 @@ let board = [
 let playerPosX = 7;
 let playerPosY = 14;
 
-let invaders = []
+let lasers = []; 
+
+let invaderDirection = 1;
+let invaders = []; 
 
 for (let row = 0; row < 3; row++) {
   for (let col = 0; col < 9; col++) {
@@ -86,13 +87,26 @@ const movePlayerRight = () => {
 }
 
 const moveInvader = () => {
+  let atEdge = false; 
   invaders.forEach(invader => {
-    invader.y++;
+    if (invader.x === 0 && invaderDirection === -1 || (invader.x === board[0].length - 1 && invaderDirection === 1)) {
+      atEdge = true; 
+    } 
   })
-  render()
+  if (atEdge) {
+    invaderDirection *= -1;
+    invaders.forEach(invader => {
+      invader.y++;
+    })
+  } else {
+    invaders.forEach(invader => {
+      invader.x += invaderDirection;
+    })
+  }
+  render();
 }
 
-setInterval(moveInvader, 1000)
+setInterval(moveInvader, 250)
 
 const checkCollision = () => {
   
