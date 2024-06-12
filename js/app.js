@@ -32,7 +32,13 @@ let board = [
 let playerPosX = 7;
 let playerPosY = 14;
 
-let invaders = [];
+let invaders = []
+
+for (let row = 0; row < 3; row++) {
+  for (let col = 0; col < 9; col++) {
+    invaders.push({x:col, y:row})
+  }
+}
 
 /*----- Cached Element References  -----*/
 
@@ -42,25 +48,27 @@ const scoreBoardElement = document.querySelector('.score-board')
 /*-------------- Functions -------------*/
 
 const render =  () => {
-  
   gameBoardElement.innerHTML = '';
-  
-  board.forEach((row, rowIndex) => {
-    row.forEach((cell, colIndex) => {
-      const cellElement = document.createElement('div');
-      cellElement.style.width = '40px';
-      cellElement.style.height = '40px';
 
-      if (rowIndex === playerPosY && colIndex === playerPosX) {
-        cellElement.style.backgroundColor = player.color;
-      } else if (cell === 2) {
+board.forEach((row, rowIndex) => {
+  row.forEach((cell, colIndex) => {
+    const cellElement = document.createElement('div');
+    cellElement.style.width = '40px';
+    cellElement.style.height = '40px';
+
+    if (rowIndex === playerPosY && colIndex === playerPosX) {
+      cellElement.style.backgroundColor = player.color;
+    } else {
+      const isInvader = invaders.some(invader => invader.x === colIndex && invader.y === rowIndex);
+      if (isInvader) {
         cellElement.style.backgroundColor = invader.color;
       } else {
-        cellElement.style.backgroundColor = 'transparent'
+        cellElement.style.backgroundColor = 'transparent';
       }
-      gameBoardElement.appendChild(cellElement);
-    });
+    }
+    gameBoardElement.appendChild(cellElement);
   });
+});
 }
 
 const movePlayerLeft = () => {
@@ -77,6 +85,13 @@ const movePlayerRight = () => {
   }
 }
 
+const moveInvader = () => {
+  invaders.forEach(invader => {
+    invader.y++;
+  })
+}
+
+setInterval(moveInvader, 1000)
 /*----------- Event Listeners ----------*/
 
 document.addEventListener('keydown', function(event) {
