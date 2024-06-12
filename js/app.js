@@ -48,29 +48,36 @@ const scoreBoardElement = document.querySelector('.score-board')
 
 /*-------------- Functions -------------*/
 
-const render =  () => {
+const render = () => {
   gameBoardElement.innerHTML = '';
 
-board.forEach((row, rowIndex) => {
-  row.forEach((cell, colIndex) => {
-    const cellElement = document.createElement('div');
-    cellElement.style.width = '40px';
-    cellElement.style.height = '40px';
+  board.forEach((row, rowIndex) => {
+    row.forEach((cell, colIndex) => {
+      const cellElement = document.createElement('div');
+      cellElement.style.width = '40px';
+      cellElement.style.height = '40px';
 
-    if (rowIndex === playerPosY && colIndex === playerPosX) {
-      cellElement.style.backgroundColor = player.color;
-    } else {
-      const isInvader = invaders.some(invader => invader.x === colIndex && invader.y === rowIndex);
-      if (isInvader) {
-        cellElement.style.backgroundColor = invader.color;
+      if (rowIndex === playerPosY && colIndex === playerPosX) {
+        cellElement.style.backgroundColor = player.color;
       } else {
-        cellElement.style.backgroundColor = 'transparent';
+        const isInvader = invaders.some(
+          (invader) => invader.x === colIndex && invader.y === rowIndex
+        );
+        const isLaser = lasers.some(
+          (laser) => laser.x === colIndex && laser.y === rowIndex
+        );
+        if (isInvader) {
+          cellElement.style.backgroundColor = invader.color;
+        } else if (isLaser) {
+          cellElement.style.backgroundColor = 'red';
+        } else {
+          cellElement.style.backgroundColor = 'transparent';
+        }
       }
-    }
-    gameBoardElement.appendChild(cellElement);
+      gameBoardElement.appendChild(cellElement);
+    });
   });
-});
-}
+};
 
 const movePlayerLeft = () => {
   if (playerPosX > 0) {
@@ -129,12 +136,10 @@ document.addEventListener('keydown', (event) => {
     movePlayerLeft();
   } else if (event.key === 'ArrowRight') {
     movePlayerRight();
-  } else if (event.key === 'Space') {
+  } else if (event.key === ' ') {
     shootLaser();
   }
 })
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
   render();
