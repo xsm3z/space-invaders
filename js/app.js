@@ -48,7 +48,13 @@ const scoreBoardElement = document.querySelector('.score-board')
 
 /*-------------- Functions -------------*/
 
-const render = () => {
+const init = () => {
+  renderBoard();
+}
+
+window.onload = init;
+
+const renderBoard = () => {
   gameBoardElement.innerHTML = '';
 
   board.forEach((row, rowIndex) => {
@@ -83,14 +89,14 @@ const movePlayerLeft = () => {
   if (playerPosX > 0) {
     playerPosX--;
   }
-  render()
+  renderBoard()
 }
 
 const movePlayerRight = () => {
   if (playerPosX < board[0].length - 1) {
     playerPosX++;
   }
-  render ()
+  renderBoard()
 }
 
 const moveInvader = () => {
@@ -110,24 +116,41 @@ const moveInvader = () => {
       invader.x += invaderDirection;
     })
   }
-  render();
-}
-
-setInterval(moveInvader, 250)
-
-
-
-const shootLaser = () => {
-
+  renderBoard();
 }
 
 const checkCollision = () => {
-  
+  lasers = lasers.filter((laser) => {
+    const hitIndex = invaders.findIndex(
+      (invader) => invader.x === laser.x && invader.y === laser.y
+    );
+    if (hitIndex > -1) {
+      invaders.splice(hitIndex, 1);
+      return false;
+    }
+    return true;
+  });
+}
+
+const shootLaser = () => {
+  lasers.push({ x: playerPosX, y: playerPosY - 1 });
+}
+
+const moveLaser = () => {
+  lasers.forEach((laser, index) => {
+    laser.y -= 1;
+    if (laser.y < 0) lasers.splice(index, 1);
+  });
+  checkCollision();
+  renderBoard()
 }
 
 const updateScore = () => {
 
 }
+
+setInterval(moveInvader, 300)
+setInterval(moveLaser, 100)
 
 /*----------- Event Listeners ----------*/
 
@@ -139,8 +162,4 @@ document.addEventListener('keydown', (event) => {
   } else if (event.key === ' ') {
     shootLaser();
   }
-})
-
-document.addEventListener('DOMContentLoaded', () => {
-  render();
 })
