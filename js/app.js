@@ -33,7 +33,7 @@ let invaderDirection = 1;
 let invaders = [];
 let lasers = []; 
 let score = 0;
-let gameOver = false;
+let gameRun = false;
 
 /*----- Cached Element References  -----*/
 
@@ -55,18 +55,17 @@ const renderBoard = () => {
   board.forEach((row, rowIndex) => {
     row.forEach((cell, colIndex) => {
       const cellElement = document.createElement('div');
-      cellElement.style.width = '20px';
-      cellElement.style.height = '20px';
-
+      cellElement.style.width = '40px';
+      cellElement.style.height = '40px';
       if (rowIndex === playerPosY && colIndex === playerPosX) {
         cellElement.style.backgroundColor = player.color;
       } else {
         const isInvader = invaders.some(
           (invader) => invader.x === colIndex && invader.y === rowIndex
-        );
+        )
         const isLaser = lasers.some(
           (laser) => laser.x === colIndex && laser.y === rowIndex
-        );
+        )
         if (isInvader) {
           cellElement.style.backgroundColor = invader.color;
         } else if (isLaser) {
@@ -108,7 +107,7 @@ const moveInvader = () => {
   renderBoard();
 }
 
-const checkCollision = () => {
+const updateScore = () => {
   lasers = lasers.filter((laser) => {
     const hitIndex = invaders.findIndex(
       (invader) => invader.x === laser.x && invader.y === laser.y
@@ -116,7 +115,7 @@ const checkCollision = () => {
     if (hitIndex > -1) {
       invaders.splice(hitIndex, 1);
       score += 10;
-      updateScore();
+      scoreBoardElement.textContent = score;
       return false;
     }
     return true;
@@ -126,17 +125,19 @@ const checkCollision = () => {
 const playerControls = (event) => {
   switch (event.key) {
     case 'ArrowLeft':
-      if (playerPosX > 0);
-       playerPosX--;
-       break;
+      if (playerPosX > 0) {
+        playerPosX--;
+      }
+      break;
     case 'ArrowRight':
-      if (playerPosX < board[0].length - 1);
-      playerPosX++;
+      if (playerPosX < board[0].length - 1) {
+        playerPosX++;
+      }
       break;
     case ' ':
-      lasers.push({ x: playerPosX, y: playerPosY - 1 });
+      lasers.push({ x: playerPosX, y: playerPosY});
       break;
-      default:
+    default:
       break;  
   } 
   renderBoard();
@@ -147,12 +148,12 @@ const moveLaser = () => {
     laser.y -= 1;
     if (laser.y < 0) lasers.splice(index, 1);
   });
-  checkCollision();
+  updateScore();
   renderBoard()
 }
 
-const updateScore = () => {
-  scoreBoardElement.textContent = score;
+const gameOver = () => {
+  
 }
 
 setInterval(moveInvader, 300)
