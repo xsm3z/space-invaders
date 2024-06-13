@@ -33,7 +33,7 @@ let invaderDirection = 1;
 let invaders = [];
 let lasers = []; 
 let score = 0;
-let gameRun = false;
+let gameRun = true;
 
 /*----- Cached Element References  -----*/
 
@@ -45,7 +45,7 @@ const scoreBoardElement = document.querySelector('.score-board')
 const init = () => {
   renderBoard();
   updateScore();
-  initInvaders();
+  renderInvaders();
 }
 
 window.onload = init;
@@ -79,7 +79,7 @@ const renderBoard = () => {
   });
 };
 
-const initInvaders = () => {
+const renderInvaders = () => {
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 9; col++) {
       invaders.push({x:col, y:row})
@@ -105,6 +105,7 @@ const moveInvader = () => {
     })
   }
   renderBoard();
+  gameOver();
 }
 
 const updateScore = () => {
@@ -153,7 +154,12 @@ const moveLaser = () => {
 }
 
 const gameOver = () => {
-  
+  const reachedPlayer = invaders.some(invader => invader.y === playerPosY);
+  const invadersDestroyed = invaders.length === 0; 
+  if (reachedPlayer || invadersDestroyed) {
+    gameRun = false; 
+    console.log('gameover')
+  } 
 }
 
 setInterval(moveInvader, 300)
