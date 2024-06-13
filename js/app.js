@@ -29,21 +29,11 @@ let board = [
 
 let playerPosX = 7;
 let playerPosY = 14;
-
-let lasers = []; 
-
-let score = 0;
-
-let gameOver = false;
-
 let invaderDirection = 1;
-let invaders = []; 
-
-for (let row = 0; row < 3; row++) {
-  for (let col = 0; col < 9; col++) {
-    invaders.push({x:col, y:row})
-  }
-}
+let invaders = [];
+let lasers = []; 
+let score = 0;
+let gameOver = false;
 
 /*----- Cached Element References  -----*/
 
@@ -55,13 +45,13 @@ const scoreBoardElement = document.querySelector('.score-board')
 const init = () => {
   renderBoard();
   updateScore();
+  initInvaders();
 }
 
 window.onload = init;
 
 const renderBoard = () => {
   gameBoardElement.innerHTML = '';
-
   board.forEach((row, rowIndex) => {
     row.forEach((cell, colIndex) => {
       const cellElement = document.createElement('div');
@@ -90,18 +80,12 @@ const renderBoard = () => {
   });
 };
 
-const movePlayerLeft = () => {
-  if (playerPosX > 0) {
-    playerPosX--;
+const initInvaders = () => {
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 9; col++) {
+      invaders.push({x:col, y:row})
+    }
   }
-  renderBoard()
-}
-
-const movePlayerRight = () => {
-  if (playerPosX < board[0].length - 1) {
-    playerPosX++;
-  }
-  renderBoard()
 }
 
 const moveInvader = () => {
@@ -139,8 +123,23 @@ const checkCollision = () => {
   });
 }
 
-const shootLaser = () => {
-  lasers.push({ x: playerPosX, y: playerPosY - 1 });
+const playerControls = (event) => {
+  switch (event.key) {
+    case 'ArrowLeft':
+      if (playerPosX > 0);
+       playerPosX--;
+       break;
+    case 'ArrowRight':
+      if (playerPosX < board[0].length - 1);
+      playerPosX++;
+      break;
+    case ' ':
+      lasers.push({ x: playerPosX, y: playerPosY - 1 });
+      break;
+      default:
+      break;  
+  } 
+  renderBoard();
 }
 
 const moveLaser = () => {
@@ -161,12 +160,4 @@ setInterval(moveLaser, 100)
 
 /*----------- Event Listeners ----------*/
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowLeft') {
-    movePlayerLeft();
-  } else if (event.key === 'ArrowRight') {
-    movePlayerRight();
-  } else if (event.key === ' ') {
-    shootLaser();
-  }
-})
+document.addEventListener('keydown', playerControls)
