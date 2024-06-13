@@ -32,6 +32,10 @@ let playerPosY = 14;
 
 let lasers = []; 
 
+let score = 0;
+
+let gameOver = false;
+
 let invaderDirection = 1;
 let invaders = []; 
 
@@ -50,6 +54,7 @@ const scoreBoardElement = document.querySelector('.score-board')
 
 const init = () => {
   renderBoard();
+  updateScore();
 }
 
 window.onload = init;
@@ -60,8 +65,8 @@ const renderBoard = () => {
   board.forEach((row, rowIndex) => {
     row.forEach((cell, colIndex) => {
       const cellElement = document.createElement('div');
-      cellElement.style.width = '40px';
-      cellElement.style.height = '40px';
+      cellElement.style.width = '20px';
+      cellElement.style.height = '20px';
 
       if (rowIndex === playerPosY && colIndex === playerPosX) {
         cellElement.style.backgroundColor = player.color;
@@ -126,6 +131,8 @@ const checkCollision = () => {
     );
     if (hitIndex > -1) {
       invaders.splice(hitIndex, 1);
+      score += 10;
+      updateScore();
       return false;
     }
     return true;
@@ -146,7 +153,7 @@ const moveLaser = () => {
 }
 
 const updateScore = () => {
-
+  scoreBoardElement.textContent = score;
 }
 
 setInterval(moveInvader, 300)

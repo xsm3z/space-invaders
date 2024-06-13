@@ -17,10 +17,15 @@ body {
 .game-board {
   display: flex;
   flex-wrap: wrap;
-  width: 600px;
-  height: 600px;
+  width: 300px;
+  height: 300px;
   border: solid 1px white;
   background-color: black;
+}
+
+.score-board {
+  color: white;
+  text-align: center;
 }
 
 .title::after {
