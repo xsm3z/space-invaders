@@ -39,6 +39,10 @@ let gameRun = true;
 
 const gameBoardElement = document.querySelector('.game-board')
 const scoreBoardElement = document.querySelector('.score-board')
+const popUpElement = document.querySelector('.message')
+const resetElement = document.querySelector('#reset-button');
+const finalScoreElement = document.querySelector('#final-score')
+const popUpMessageElement = document.querySelector('#win-or-lose')
 
 /*-------------- Functions -------------*/
 
@@ -54,37 +58,38 @@ const renderBoard = () => {
   gameBoardElement.innerHTML = '';
   board.forEach((row, rowIndex) => {
     row.forEach((cell, colIndex) => {
-      const cellElement = document.createElement('div');
-      cellElement.style.width = '40px';
-      cellElement.style.height = '40px';
-      if (rowIndex === playerPosY && colIndex === playerPosX) {
-        cellElement.style.backgroundColor = player.color;
-      } else {
-        const isInvader = invaders.some(
-          (invader) => invader.x === colIndex && invader.y === rowIndex
-        )
-        const isLaser = lasers.some(
-          (laser) => laser.x === colIndex && laser.y === rowIndex
-        )
-        if (isInvader) {
-          cellElement.style.backgroundColor = invader.color;
-        } else if (isLaser) {
-          cellElement.style.backgroundColor = 'red';
-        } else {
-          cellElement.style.backgroundColor = 'transparent';
-        }
-      }
+      const cellElement = createCells(rowIndex, colIndex);
       gameBoardElement.appendChild(cellElement);
     });
   });
-};
+}
 
-const renderInvaders = () => {
-  for (let row = 0; row < 3; row++) {
-    for (let col = 0; col < 9; col++) {
-      invaders.push({x:col, y:row})
+const createCells = (rowIndex, colIndex) => {
+  const cell = document.createElement('div');
+  cell.style.width = '40px';
+  cell.style.height = '40px';
+  if (rowIndex === playerPosY && colIndex === playerPosX) {
+    cell.style.backgroundColor = player.color;
+  } else {
+    const isInvader = invaders.some(invader => invader.x === colIndex && invader.y === rowIndex);
+    const isLaser = lasers.some(laser => laser.x === colIndex && laser.y === rowIndex);
+    if (isInvader) {
+      cell.style.backgroundColor = invader.color;
+    } else if (isLaser) {
+      cell.style.backgroundColor = 'red';
+    } else {
+      cell.style.backgroundColor = 'transparent';
     }
   }
+  return cell;
+}
+
+const renderInvaders = () => {
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 10; col++) {
+      invaders.push({x:col, y:row})
+    };
+  };
 }
 
 const moveInvader = () => {
@@ -158,8 +163,52 @@ const gameOver = () => {
   const invadersDestroyed = invaders.length === 0; 
   if (reachedPlayer || invadersDestroyed) {
     gameRun = false; 
-    console.log('gameover')
-  } 
+    if (reachedPlayer) {
+      showPopUp('lose')
+    } else if (invadersDestroyed){
+      showPopUp('win')
+    }
+  }
+}
+
+const showPopUp = (condition) => {
+  if (condition === 'win') {
+    popUpMessageElement.textContent = 'Mission Complete!'
+  } else if (condition === 'lose') {
+    popUpMessageElement.textContent = "Mission Failed"
+  }
+  finalScoreElement.textContent = `Your Score: ${score}`;
+  popUpElement.classList.remove('hidden');
+}
+
+const resetGame = () => {
+  board = [
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  ];
+  
+  playerPosX = 7;
+  playerPosY = 14;
+  invaderDirection = 1;
+  invaders = [];
+  lasers = []; 
+  score = 0;
+  gameRun = true;
+  popUpElement.classList.add('hidden')
+  init()
 }
 
 setInterval(moveInvader, 300)
@@ -168,3 +217,4 @@ setInterval(moveLaser, 100)
 /*----------- Event Listeners ----------*/
 
 document.addEventListener('keydown', playerControls)
+resetElement.addEventListener('click', resetGame)

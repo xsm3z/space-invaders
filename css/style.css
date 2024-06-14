@@ -12,6 +12,7 @@ body {
 .game-container {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .game-board {
@@ -26,6 +27,25 @@ body {
 .score-board {
   color: white;
   text-align: center;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.message-content {
+  text-align: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
 }
 
 .title::after {
