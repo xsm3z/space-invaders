@@ -33,7 +33,6 @@ let invaderDirection = 1;
 let invaders = [];
 let lasers = []; 
 let score = 0;
-let gameRun = true;
 
 /*----- Cached Element References  -----*/
 
@@ -52,8 +51,6 @@ const init = () => {
   renderInvaders();
 }
 
-window.onload = init;
-
 const renderBoard = () => {
   gameBoardElement.innerHTML = '';
   board.forEach((row, rowIndex) => {
@@ -66,8 +63,8 @@ const renderBoard = () => {
 
 const createCells = (rowIndex, colIndex) => {
   const cell = document.createElement('div');
-  cell.style.width = '40px';
-  cell.style.height = '40px';
+  cell.style.width = '30px';
+  cell.style.height = '30px';
   if (rowIndex === playerPosY && colIndex === playerPosX) {
     cell.style.backgroundColor = player.color;
   } else {
@@ -162,7 +159,6 @@ const gameOver = () => {
   const reachedPlayer = invaders.some(invader => invader.y === playerPosY);
   const invadersDestroyed = invaders.length === 0; 
   if (reachedPlayer || invadersDestroyed) {
-    gameRun = false; 
     if (reachedPlayer) {
       showPopUp('lose')
     } else if (invadersDestroyed){
@@ -206,7 +202,6 @@ const resetGame = () => {
   invaders = [];
   lasers = []; 
   score = 0;
-  gameRun = true;
   popUpElement.classList.add('hidden')
   init()
 }
@@ -218,3 +213,6 @@ setInterval(moveLaser, 100)
 
 document.addEventListener('keydown', playerControls)
 resetElement.addEventListener('click', resetGame)
+document.addEventListener('DOMContentLoaded', () =>{
+  init()
+})
