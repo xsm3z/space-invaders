@@ -34,3 +34,10 @@ Destroying alien invaders will get you 10pts each!
 - Level System : Can move through different sectors and progress through a storyline.
 - Boss battles : Introducing boss battles at the end of eah mission set.
 - Power Ups : Power ups, that porvide player with different weapons, speed or health enhancements.
+
+## Attributions 
+
+- [Code with Ania Kubow YT](https://www.youtube.com/watch?v=s6LrpUTQQn0&ab_channel=CodewithAniaKub%C3%B3w), used to figure out removing and redrawing an object.
+- [chatGPT](https://chatgpt.com/), used to see some basic invader movement and how to implement into an array.
+- [Adobe](https://www.adobe.com/express/create/logo), used for logo generation.
+- [Stack overflow](https://stackoverflow.com/questions/41121982/strange-behavior-of-an-array-filled-by-array-prototype-fill), learned how to fill an array rather than pre drawing the entire game board. 
