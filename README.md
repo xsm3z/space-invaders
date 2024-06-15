@@ -22,7 +22,7 @@ Destroying alien invaders will get you 10pts each!
 
 ## Development
 
-- ### This game was developed with the following technologies:
+### This game was developed with the following technologies:
 - HTML
 - CSS
 - JavaScript
@@ -31,6 +31,6 @@ Destroying alien invaders will get you 10pts each!
 
 - Multiplayer Mode : Introducing a Co-op mode where players can defend Earth together.
 - New Alien Types : Adding a variety of different Alien types, behaviors and movement patterns.
-- Level System : Can move through different sectors and progress through a storyline
-- Boss battles : Introducing boss battles at the end of eah mission set
-- Power Ups : Power ups, that porvide player with different weapons, speed or health enhancements
+- Level System : Can move through different sectors and progress through a storyline.
+- Boss battles : Introducing boss battles at the end of eah mission set.
+- Power Ups : Power ups, that porvide player with different weapons, speed or health enhancements.
